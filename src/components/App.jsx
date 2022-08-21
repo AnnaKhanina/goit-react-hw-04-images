@@ -1,5 +1,5 @@
 import AppStyled from './App.styled';
-import Searchbar from './Searchbar/Searchbar';
+import SearchBar from './SearchBar/SearchBar';
 import SearchForm from './SearchForm/SearchForm';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
@@ -58,9 +58,9 @@ export class App extends Component {
 
     return (
       <AppStyled>
-        <Searchbar>
+        <SearchBar>
           <SearchForm onSubmit={this.handleSubmit} />
-        </Searchbar>
+        </SearchBar>
         {gallery.length > 0 && (
           <>
             <ImageGallery
