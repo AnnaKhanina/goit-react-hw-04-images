@@ -1,9 +1,9 @@
 import SearchFormButtonStyled from './SearchFormButtonStyled';
-import { BiSearchAlt2 } from 'react-icons/bi';
+import { MdImageSearch } from 'react-icons/md';
 
 const SearchFormButton = () => (
   <SearchFormButtonStyled type="submit">
-    <BiSearchAlt2 size="36" />
+    <MdImageSearch size="30" />
   </SearchFormButtonStyled>
 );
 

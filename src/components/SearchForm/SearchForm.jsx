@@ -2,6 +2,7 @@ import SearchFormStyled from './SearchForm.styled';
 import SearchFormInput from './SearchFormInput/SearchFormInput';
 import SearchFormButton from './SearchFormButton/SearchFormButton';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { Component } from 'react';
 
 class SearchForm extends Component {
@@ -13,9 +14,23 @@ class SearchForm extends Component {
     this.setState({ searchText: e.currentTarget.value });
   };
 
+  // handleSubmit = e => {
+  //   e.preventDefault();
+  //   this.props.onSubmit(this.state.searchText);
+  // };
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.searchText);
+    if (this.state.query.trim() === '') {
+      toast.warn('Please specify your query!');
+      return;
+    }
+    this.props.onSubmit(this.state.query);
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ query: '' });
   };
 
   render() {
