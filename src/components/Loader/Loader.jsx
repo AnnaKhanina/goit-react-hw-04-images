@@ -4,7 +4,7 @@ import { Hearts } from 'react-loader-spinner';
 const Loader = () => (
   <LoaderStyled>
     <Hearts
-      color="3f51b5"
+      color="#3f51b5"
       width="100"
       visible={true}
       ariaLabel="Hearts"
