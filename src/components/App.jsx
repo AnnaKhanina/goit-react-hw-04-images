@@ -5,76 +5,64 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import apiKey from '../api/api';
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 
-export class App extends Component {
-  state = {
-    gallery: [],
-    page: 1,
-    query: '',
-    total: null,
-    loading: false,
-    imageURL: null,
-  };
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.gallery !== this.state.gallery) {
-      this.setState({ loading: false });
-    }
-  }
-
-  handleSubmit = query => {
-    if (query.trim().length === 0) {
-      return;
-    }
-
-    this.setState({ query, loading: true });
-
-    apiKey(query, this.state.page).then(data =>
-      this.setState({
-        gallery: [...data.hits],
-        total: data.totalHits,
-      })
-    );
-  };
-
-  handleLoadMoreBtn = async () => {
-    await this.setState(prevState => {
-      return { page: prevState.page + 1, loading: true };
-    });
-    apiKey(this.state.query, this.state.page).then(data =>
-      this.setState(prevState => {
-        return { gallery: [...prevState.gallery, ...data.hits] };
-      })
-    );
-  };
-
-  onClickGalleryImage = imageURL => {
-    this.setState({ imageURL });
-  };
-
-  render() {
-    const { gallery, imageURL, total } = this.state;
-
+  export const App = () => {
+    const [gallery, setGallery] = useState([]);
+    const [page, setPage] = useState(1);
+    const [query, setQuery] = useState('');
+    const [total, setTotal] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [imageURL, setImageURL] = useState(null);
+  
+    const handleSubmit = query => {
+      if (query.trim().length === 0) {
+        return;
+      }
+      setGallery([]);
+      setQuery(query);
+      setPage(1);
+      setLoading(true);
+    };
+  
+    const handleLoadMoreBtn = () => {
+      setPage(prevState => prevState + 1);
+      setLoading(true);
+    };
+  
+    const onClickGalleryImage = imageURL => {
+      setImageURL(imageURL);
+    };
+  
+    useEffect(() => {
+      if (query.trim().length === 0) {
+        return;
+      }
+      apiKey(query, page).then(data => {
+        setGallery(prevState => [...prevState, ...data.hits]);
+        setTotal(data.totalHits);
+        setLoading(false);
+      });
+    }, [query, page]);
+  
     return (
       <AppStyled>
         <SearchBar>
-          <SearchForm onSubmit={this.handleSubmit} />
+          <SearchForm onSubmit={handleSubmit} />
         </SearchBar>
         {gallery.length > 0 && (
           <>
             <ImageGallery
               galleryList={gallery}
-              onClick={this.onClickGalleryImage}
+              onClick={onClickGalleryImage}
               imageURL={imageURL}
             />
             {total !== gallery.length && (
-              <Button text="Load more" onClick={this.handleLoadMoreBtn} />
+              <Button text="Load more" onClick={handleLoadMoreBtn} />
             )}
           </>
         )}
-        {this.state.loading && <Loader />}
+        {loading && <Loader />}
       </AppStyled>
     );
-  }
-}
+  };

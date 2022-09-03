@@ -2,50 +2,37 @@ import ImageGalleryItemStyled from './ImageGalleryItem.styled';
 import GalleryItemImage from './GalleryItemImage/GalleryItemImage';
 import Modal from 'components/Modal/Modal';
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import { useState } from 'react';
 
-class ImageGalleryItem extends Component {
-  state = {
-    showModal: false,
+
+
+const ImageGalleryItem = ({ onClick, galleryList, imageURL }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const showModalonClick = () => {
+    setShowModal(prevState => !prevState);
   };
 
-  showModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
+  return (
+    <>
+      {galleryList.map(({ id, webformatURL, largeImageURL }) => {
+        return (
+          <ImageGalleryItemStyled
+            key={id}
+            onClick={() => {
+              onClick(largeImageURL);
+              showModalonClick();
+            }}
+          >
+            <GalleryItemImage src={webformatURL} />
+          </ImageGalleryItemStyled>
+        );
+      })}
+      {showModal && <Modal src={imageURL} onClose={showModalonClick} />}
+    </>
+  );
+};
 
-  openGalleryItemModal = id => {
-    this.showModal();
-    const galleryItem = this.props.galleryList.filter(item => item.id === id);
-    this.setState({ largeImage: galleryItem[0].largeImageURL });
-  };
-
-  render() {
-    const { galleryList } = this.props;
-
-    return (
-      <>
-        {galleryList.map(({ id, webformatURL, largeImageURL }) => {
-          return (
-            <ImageGalleryItemStyled
-              key={id}
-              onClick={() => {
-                this.props.onClick(largeImageURL);
-                this.showModal();
-              }}
-            >
-              <GalleryItemImage src={webformatURL} />
-            </ImageGalleryItemStyled>
-          );
-        })}
-        {this.state.showModal && (
-          <Modal src={this.props.imageURL} onClose={this.showModal} />
-        )}
-      </>
-    );
-  }
-}
 export default ImageGalleryItem;
 
 ImageGalleryItem.propType = {
