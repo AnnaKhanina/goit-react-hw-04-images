@@ -2,17 +2,17 @@ import styled from '@emotion/styled';
 
 const SearchFormInputStyled = styled.input`
   display: inline-block;
-  width: 100%;
+  width: 100%;${p => p.theme.sizes.all};
   font: inherit;
-  font-size: 20px;
-  border: none;
-  outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
+  font-size: ${p => p.theme.fontSizes.sm};
+  border: ${p => p.theme.borders.none};
+  outline: ${p => p.theme.outlines.none};
+  padding-left: ${p => p.theme.space[2]}px;
+  padding-right: ${p => p.theme.space[2]}px;
 
   &::placeholder {
     font: inherit;
-    font-size: 18px;
+    font-size: ${p => p.theme.fontSizes.sm};
   }
 `;
 

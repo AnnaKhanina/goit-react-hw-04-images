@@ -1,30 +1,29 @@
 import styled from '@emotion/styled';
 
 const ButtonStyled = styled.button`
+  display: inline-block;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
-  padding: 8px 16px;
-  border-radius: 2px;
-  background-color: #3f51b5;
-  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
-  display: inline-block;
-  color: #fff;
-  border: 0;
   text-decoration: none;
   cursor: pointer;
+  padding: ${p => p.theme.space[3]}px ${p => p.theme.space[4]}px;
+  border-radius: ${p => p.theme.radii.sm};
+  background-color: ${p => p.theme.colors.primary};
+  transition: all ${p => p.theme.transition.cubic};  
+  color: ${p => p.theme.colors.white};
+  border: ${p => p.theme.borders.none};
   font-family: inherit;
-  font-size: 18px;
-  line-height: 24px;
   font-style: normal;
-  font-weight: 500;
-  width: 180px;
+  font-size: ${p => p.theme.fontSizes.sm};
+  line-height: ${p => p.theme.lineHeights.button};
+  font-weight: ${p => p.theme.fontWeights.medium};
+  width: ${p => p.theme.sizes.s};
 
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: ${p => p.theme.boxShadow.button};
   &:hover,
   &:focus {
-    background-color: #303f9f;
+    background-color: ${p => p.theme.colors.secondary};
   }
 `;
 

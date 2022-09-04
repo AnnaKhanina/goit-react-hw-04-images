@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 
 const GalleryItemImageStyled = styled.img`
-  width: 100%;
-  height: 260px;
+  width: ${p => p.theme.sizes.all};
+  height: ${p => p.theme.sizes.m};
   object-fit: cover;
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform ${p => p.theme.transition.cubic};
 
   &:hover {
     transform: scale(1.03);
